@@ -1,17 +1,16 @@
 NAME        = Terri-fried
 
-CXX         = x86_64-w64-mingw32-g++
+CXX         = g++
 
 SOURCES     = $(wildcard *.cpp)
 
 OBJ_DIR     = build/obj
 OUT_DIR     = build/bin
 OBJS        = $(patsubst %, $(OBJ_DIR)/%, $(SOURCES:.cpp=.o))
-RES_FILES   = winres/TF-icon.res
 MKDIR_P     = mkdir -p
 
-FLAGS       = -O3 -std=c++11
-LIBS        = -lmingw32 -lSDL2main -lSDL2 -lSDL2_Image -lSDL2_Mixer -lSDL2_ttf
+FLAGS       = -O3 -std=c++11 -DDREAMCAST
+LIBS        = -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 
 .PHONY: directories
@@ -28,7 +27,7 @@ $(OUT_DIR):
 
 
 $(NAME): $(OBJS)
-	$(CXX) $(FLAGS) -o $(OUT_DIR)/$(NAME) $(OBJS) $(RES_FILES) $(LIBS)
+	$(CXX) $(FLAGS) -o $(OUT_DIR)/$(NAME) $(OBJS) $(LIBS)
 
 $(OBJ_DIR)/%.o: %.cpp
 	$(CXX) $(FLAGS) -c $< -o $@
